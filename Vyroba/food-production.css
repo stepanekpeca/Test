@@ -1,0 +1,96 @@
+.sidebar{overflow-y:auto}
+.nav button{padding-top:8px;padding-bottom:8px;font-size:12px}
+.food-page{display:grid;gap:17px}
+.food-page-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:2px}
+.food-page-heading .subtitle{max-width:690px;line-height:1.55}
+.food-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(280px,.8fr);gap:16px;align-items:start}
+.food-grid-equal{grid-template-columns:repeat(2,minmax(0,1fr))}
+.food-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
+.food-stat{min-height:105px;padding:16px 18px;border:1px solid var(--line);border-radius:5px;background:#fff}
+.food-stat-label{color:var(--muted);font-size:11px}
+.food-stat-value{margin-top:8px;font-family:var(--display);font-size:25px;font-weight:700;line-height:1.15}
+.food-stat-foot{margin-top:7px;color:var(--muted);font-size:10px}
+.food-card{min-width:0;border:1px solid var(--line);border-radius:5px;background:#fff}
+.food-card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line)}
+.food-card-title{margin:0;font-family:var(--display);font-size:13px;font-weight:700}
+.food-card-subtitle{margin-top:4px;color:var(--muted);font-size:10px}
+.food-card-body{padding:16px 18px}
+.food-table-wrap{overflow:auto}
+.food-table{width:100%;border-collapse:collapse;text-align:left}
+.food-table th{padding:10px 13px;background:#f7f8f6;color:#748078;font-size:10px;font-weight:600;white-space:nowrap}
+.food-table td{padding:11px 13px;border-top:1px solid #eef0ed;color:#46534b;font-size:11px;vertical-align:middle}
+.food-table strong{color:var(--ink);font-size:11px;font-weight:600}
+.food-table .food-muted{display:block;margin-top:4px;color:var(--muted);font-size:10px}
+.food-code{color:#68756d;font-family:var(--mono);font-size:10px;white-space:nowrap}
+.food-status{display:inline-flex;align-items:center;gap:5px;padding:4px 7px;border-radius:3px;background:#f0f2f0;color:#637068;font-size:9px;font-weight:600;white-space:nowrap}
+.food-status:before{width:5px;height:5px;border-radius:50%;background:#98a39b;content:''}
+.food-status.running{background:var(--green-pale);color:#286b50}
+.food-status.running:before{background:#42956c}
+.food-status.planned,.food-status.produced{background:var(--orange-pale);color:#a9522d}
+.food-status.planned:before,.food-status.produced:before{background:#d67443}
+.food-status.expedition{background:#eaf0f6;color:#365d7b}
+.food-status.expedition:before{background:#5484a8}
+.food-status.shipped{background:#edf1e7;color:#687744}
+.food-status.shipped:before{background:#99a866}
+.food-action{min-height:29px;padding:0 9px;border:1px solid #b9d4c2;border-radius:3px;background:#f2f8f3;color:#276449;font-size:10px;font-weight:600;white-space:nowrap}
+.food-action:hover{background:#e4f1e8}
+.food-action:disabled{cursor:not-allowed;opacity:.45}
+.food-action.secondary{border-color:var(--line);background:#fff;color:#46534b}
+.food-action.secondary:hover{border-color:#b9c9bf;color:var(--green)}
+.food-action-row{display:flex;flex-wrap:wrap;gap:7px;align-items:center}
+.food-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 16px;border-bottom:1px solid var(--line)}
+.food-search{width:min(330px,100%);height:34px;padding:0 10px;border:1px solid var(--line);border-radius:4px;background:#fff;color:var(--ink);font-size:11px}
+.food-search:focus,.food-portion-input:focus{outline:2px solid #b9d4c2;outline-offset:1px}
+.food-tabs{display:flex;flex-wrap:wrap;gap:6px}
+.food-tab{min-height:30px;padding:0 10px;border:1px solid var(--line);border-radius:4px;background:#fff;color:#657168;font-size:10px}
+.food-tab.active{border-color:#b9d4c2;background:var(--green-pale);color:#286b50;font-weight:600}
+.food-recipe-layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:16px;align-items:start}
+.food-recipe-list{display:grid;gap:7px;padding:12px}
+.food-recipe-choice{width:100%;padding:12px;border:1px solid var(--line);border-radius:4px;background:#fff;color:var(--ink);text-align:left}
+.food-recipe-choice.active{border-color:#91bca0;background:#f1f7f2}
+.food-recipe-choice strong{display:block;font-size:11px}
+.food-recipe-choice span{display:block;margin-top:5px;color:var(--muted);font-size:10px}
+.food-recipe-facts{display:flex;flex-wrap:wrap;gap:8px;margin:13px 0 17px}
+.food-fact{padding:7px 9px;border:1px solid var(--line);border-radius:3px;background:#fafbf9;color:#66736a;font-size:10px}
+.food-fact strong{color:var(--ink)}
+.food-procedure{display:grid;gap:9px;margin:0;padding:0;list-style:none;counter-reset:step}
+.food-procedure li{position:relative;min-height:35px;padding:2px 0 2px 36px;color:#46534b;font-size:11px;line-height:1.55;counter-increment:step}
+.food-procedure li:before{position:absolute;top:0;left:0;display:grid;width:24px;height:24px;place-items:center;border-radius:50%;background:var(--green-pale);color:var(--green);font-family:var(--mono);font-size:10px;content:counter(step)}
+.food-calculator{display:flex;align-items:center;gap:10px;margin-bottom:12px;color:#66736a;font-size:11px}
+.food-portion-input{width:95px;height:33px;padding:0 8px;border:1px solid var(--line);border-radius:4px;background:#fff}
+.food-empty{padding:26px 12px;color:var(--muted);font-size:11px;text-align:center}
+.food-warning{margin:12px 16px;padding:10px 12px;border:1px solid #ecd0b9;border-radius:4px;background:#fff8f2;color:#8d552e;font-size:11px;line-height:1.5}
+.food-stock-card{padding:15px;border:1px solid var(--line);border-radius:5px;background:#fff}
+.food-stock-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.food-stock-name{font-size:11px;font-weight:600}
+.food-stock-type{color:var(--muted);font-size:9px}
+.food-stock-count{margin-top:13px;font-family:var(--display);font-size:23px;font-weight:700}
+.food-stock-count span{font-family:var(--sans);font-size:11px;font-weight:500}
+.food-stock-foot{margin-top:5px;color:var(--muted);font-size:10px}
+.food-link{padding:0;border:0;background:none;color:var(--green);font-size:10px;font-weight:600}
+.food-link:hover{text-decoration:underline}
+.food-batch-detail{margin-top:7px;color:var(--muted);font-size:10px;line-height:1.5}
+.food-toast{position:fixed;right:24px;bottom:22px;z-index:20;max-width:min(460px,calc(100vw - 32px));padding:12px 16px;border-radius:5px;background:#1d2924;color:#fff;font-size:12px;box-shadow:0 8px 26px #18211d2b}
+.food-toast.error{background:#8e442a}
+.food-data-note{color:var(--muted);font-size:10px;line-height:1.5}
+.food-dialog-note{padding:10px 12px;border-radius:4px;background:#f1f7f2;color:#456b52;font-size:10px;line-height:1.5}
+@media(max-width:1050px){.food-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.food-grid{grid-template-columns:1fr}.food-recipe-layout{grid-template-columns:210px minmax(0,1fr)}}
+@media(max-width:700px){.content{padding:22px 16px 36px}.topbar{padding:0 16px}.shift-tag{display:none}.food-page-heading{align-items:flex-start;flex-direction:column}.food-recipe-layout{grid-template-columns:1fr}.food-recipe-list{grid-template-columns:repeat(2,minmax(0,1fr))}.food-toolbar{align-items:stretch;flex-direction:column}.food-search{width:100%}.food-table{min-width:700px}}
+@media(max-width:430px){.food-stats{gap:8px}.food-stat{padding:12px}.food-stat-value{font-size:21px}.food-recipe-list{grid-template-columns:1fr}.food-card-head,.food-card-body{padding-left:13px;padding-right:13px}}
+.food-zone-list{display:grid;gap:9px;padding:12px}
+.food-stock-zones{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.food-stock-card{display:block;width:100%;color:var(--ink);text-align:left;cursor:pointer}
+.food-stock-count,.food-stock-foot{display:block}
+.food-plan-grid{display:grid;grid-template-columns:repeat(5,minmax(150px,1fr));min-width:780px;border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.food-plan-day{min-height:215px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.food-plan-day-head{display:flex;justify-content:space-between;padding:11px;border-bottom:1px solid var(--line);font-size:11px;font-weight:700}
+.food-plan-day-head span{color:var(--muted);font-size:9px;font-weight:400}
+.food-plan-item{display:grid;gap:7px;margin:8px;padding:10px;border:1px solid var(--line);border-radius:4px;background:#fcfdfb}
+.food-plan-item strong{font-size:10px;line-height:1.4}
+.food-plan-item>span:not(.food-code):not(.food-status){color:var(--muted);font-size:9px}
+.food-receipt-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:14px}
+.food-receipt-field{display:grid;gap:6px;color:#66736a;font-size:10px}
+.food-receipt-field .food-search,.food-receipt-field .select{width:100%;height:34px}
+@media(max-width:700px){.food-receipt-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:430px){.food-receipt-grid{grid-template-columns:1fr}}
+@media(max-width:700px){.food-stock-zones{grid-template-columns:1fr}.food-plan-grid{min-width:750px}}

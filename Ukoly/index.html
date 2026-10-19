@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#191817">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Oscar’s Agenda">
+    <meta name="description" content="Týmová agenda Oscar’s Barbershop. Úkoly, poznámky a termíny na jednom místě.">
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="icon" href="./icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./styles.css">
+    <title>Oscar’s Barbershop — týmová agenda</title>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="Oscar’s Barbershop — týmová agenda">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M7 3v18M17 3v18M7 7l10 5M17 7 7 12M7 17l10-5"/></svg>
+          </span>
+          <span class="brand-name">Oscar’s <small>BARBERSHOP</small></span>
+        </a>
+        <div class="topbar-actions">
+          <button class="button button-quiet people-button" id="manage-people" type="button">Zaměstnanci</button>
+          <span class="local-badge"><span></span> Jen v tomto zařízení</span>
+        </div>
+      </header>
+
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">OSCAR’S BARBERSHOP · TÝMOVÁ AGENDA</p>
+        <h1 id="page-title">Tým v tempu.<br class="mobile-break"> Provoz pod kontrolou.</h1>
+        <p class="intro-copy">Vše důležité pro chod barbershopu na jednom místě.</p>
+      </section>
+
+      <section class="overview" aria-label="Souhrn úkolů">
+        <div class="overview-card">
+          <span class="overview-label">Celkem úkolů</span>
+          <strong id="count-all">0</strong>
+        </div>
+        <div class="overview-card">
+          <span class="overview-label">Rozpracováno</span>
+          <strong id="count-progress">0</strong>
+        </div>
+        <div class="overview-card">
+          <span class="overview-label">Hotovo</span>
+          <strong id="count-done">0</strong>
+        </div>
+      </section>
+
+      <section class="calendar-section" aria-labelledby="calendar-heading">
+        <div class="calendar-heading">
+          <div>
+            <p class="eyebrow">TERMÍNY</p>
+            <h2 id="calendar-heading">Kalendář</h2>
+          </div>
+          <div class="calendar-controls">
+            <button class="icon-button" id="previous-month" type="button" aria-label="Předchozí měsíc">‹</button>
+            <strong id="calendar-month"></strong>
+            <button class="icon-button" id="next-month" type="button" aria-label="Následující měsíc">›</button>
+            <button class="button button-quiet today-button" id="calendar-today" type="button">Dnes</button>
+            <button class="button button-quiet calendar-clear" id="calendar-clear" type="button" hidden>Zrušit filtr</button>
+          </div>
+        </div>
+        <div class="calendar-grid" id="calendar-grid" role="grid" aria-label="Kalendář úkolů"></div>
+      </section>
+
+      <section class="tasks-section" aria-labelledby="tasks-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">VAŠE AGENDA</p>
+            <h2 id="tasks-heading">Úkoly a poznámky</h2>
+          </div>
+          <button class="button button-primary add-button" id="add-task" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            <span>Nový úkol</span>
+          </button>
+        </div>
+
+        <div id="storage-alert" class="storage-alert" role="alert" hidden></div>
+
+        <label class="search-box">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg>
+          <span class="visually-hidden">Hledat v úkolech</span>
+          <input id="search" type="search" placeholder="Hledat úkol nebo člověka…" autocomplete="off">
+        </label>
+
+        <div class="filters" role="group" aria-label="Filtrovat úkoly podle stavu">
+          <button class="filter-button is-active" type="button" data-filter="all" aria-pressed="true">Vše</button>
+          <button class="filter-button" type="button" data-filter="todo" aria-pressed="false">K udělání</button>
+          <button class="filter-button" type="button" data-filter="progress" aria-pressed="false">Rozpracováno</button>
+          <button class="filter-button" type="button" data-filter="done" aria-pressed="false">Hotovo</button>
+        </div>
+
+        <div id="task-list" class="task-list" aria-live="polite"></div>
+      </section>
+
+      <footer class="app-footer">
+        <span>Vaše data zůstávají uložená lokálně v tomto zařízení.</span>
+      </footer>
+    </main>
+
+    <dialog id="task-dialog" class="task-dialog">
+      <form id="task-form" class="task-form">
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow">DETAIL ÚKOLU</p>
+            <h2 id="dialog-title">Nový úkol</h2>
+          </div>
+          <button class="icon-button" id="close-dialog" type="button" aria-label="Zavřít">×</button>
+        </div>
+        <input id="task-id" type="hidden">
+        <label class="field">
+          <span>Název úkolu</span>
+          <input id="task-title" name="title" maxlength="120" required placeholder="Např. Připravit podklady na poradu">
+        </label>
+        <div class="field-row">
+          <label class="field">
+            <span>Přiřadit komu</span>
+              <input id="task-assignee" name="assignee" maxlength="80" list="employee-options" placeholder="Jméno člověka">
+              <datalist id="employee-options"></datalist>
+          </label>
+          <label class="field">
+            <span>Termín</span>
+            <input id="task-due-date" name="dueDate" type="date">
+          </label>
+        </div>
+        <div class="field-row">
+          <label class="field">
+            <span>Stav</span>
+            <select id="task-status" name="status">
+              <option value="todo">K udělání</option>
+              <option value="progress">Rozpracováno</option>
+              <option value="done">Hotovo</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Priorita</span>
+            <select id="task-priority" name="priority">
+              <option value="normal">Běžná</option>
+              <option value="high">Vysoká</option>
+              <option value="urgent">Naléhavá</option>
+            </select>
+          </label>
+        </div>
+        <label class="field">
+          <span>Opakování</span>
+          <select id="task-recurrence" name="recurrence">
+            <option value="none">Bez opakování</option>
+            <option value="weekly">Každý týden</option>
+            <option value="monthly">Každý měsíc</option>
+          </select>
+          <small class="field-hint">Další úkol se vytvoří automaticky po označení jako hotový.</small>
+        </label>
+        <label class="field">
+          <span>Poznámka</span>
+          <textarea id="task-notes" name="notes" rows="4" maxlength="1500" placeholder="Doplňující informace, zadání nebo poznámky…"></textarea>
+        </label>
+        <p id="form-error" class="form-error" role="alert" hidden></p>
+        <div class="dialog-actions">
+          <button class="button button-danger" id="delete-task" type="button" hidden>Smazat</button>
+          <button class="button button-quiet" id="cancel-dialog" type="button">Zrušit</button>
+          <button class="button button-primary" type="submit">Uložit úkol</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="detail-dialog" class="detail-dialog" aria-labelledby="detail-title">
+      <div class="detail-panel">
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow">DETAIL ÚKOLU</p>
+            <h2 id="detail-title"></h2>
+          </div>
+          <button class="icon-button" id="close-detail-dialog" type="button" aria-label="Zavřít detail">×</button>
+        </div>
+        <div class="detail-summary" id="detail-summary"></div>
+        <p class="detail-notes" id="detail-notes"></p>
+        <section class="detail-section" id="task-details">
+          <div class="detail-heading">
+            <h3>Podúkoly</h3>
+            <span class="detail-count" id="checklist-count"></span>
+          </div>
+          <ul class="checklist" id="checklist"></ul>
+          <div class="inline-add">
+            <label class="visually-hidden" for="checklist-input">Nový podúkol</label>
+            <input id="checklist-input" maxlength="120" placeholder="Přidat podúkol…">
+            <button class="button button-quiet" id="add-checklist-item" type="button">Přidat</button>
+          </div>
+          <div class="detail-heading activity-heading">
+            <h3>Komentáře a historie</h3>
+          </div>
+          <div class="comment-composer">
+            <label class="visually-hidden" for="comment-input">Nový komentář</label>
+            <textarea id="comment-input" rows="2" maxlength="1000" placeholder="Napsat komentář…"></textarea>
+            <button class="button button-quiet" id="add-comment" type="button">Přidat komentář</button>
+          </div>
+          <ol class="activity-list" id="activity-list"></ol>
+        </section>
+        <div class="detail-actions">
+          <button class="button button-quiet" id="edit-detail-task" type="button">Upravit úkol</button>
+          <button class="button button-primary" id="done-detail-task" type="button">Označit jako hotovo</button>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog id="people-dialog" class="task-dialog people-dialog">
+      <form id="people-form" class="task-form">
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow">SPRÁVA TÝMU</p>
+            <h2>Zaměstnanci</h2>
+          </div>
+          <button class="icon-button" id="close-people-dialog" type="button" aria-label="Zavřít">×</button>
+        </div>
+        <p class="people-intro">Místní číselník jmen pro rychlé přiřazování úkolů. Neodesílá se ostatním zařízením.</p>
+        <ul class="employee-list" id="employee-list"></ul>
+        <label class="field">
+          <span>Jméno zaměstnance</span>
+          <input id="employee-name" maxlength="80" placeholder="Např. Jana Nováková">
+        </label>
+        <p id="people-error" class="form-error" role="alert" hidden></p>
+        <div class="dialog-actions">
+          <button class="button button-quiet" id="cancel-people-dialog" type="button">Zavřít</button>
+          <button class="button button-primary" id="add-employee" type="submit">Přidat zaměstnance</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
